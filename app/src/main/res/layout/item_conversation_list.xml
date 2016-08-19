@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp">
+    <ImageView
+        android:id="@+id/ivCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"
+        android:background="@drawable/common_checkbox_normal"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@drawable/selector_btn_bg">
+        <ImageView
+            android:id="@+id/ivConversationAvtar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/account_default_header"/>
+        <TextView
+            android:id="@+id/tvConversationTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="时间"
+            android:textSize="15sp"
+            android:layout_alignParentRight="true"
+
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:singleLine="true"/>
+        <TextView
+            android:id="@+id/tvConversationAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="号码"
+            android:textSize="18sp"
+            android:layout_toRightOf="@id/ivConversationAvtar"
+            android:layout_toLeftOf="@id/tvConversationTime"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:singleLine="true"/>
+        <TextView
+            android:id="@+id/tvConversationContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="呢绒gggggggggggggggggggggggggggggggggg"
+            android:textSize="15sp"
+            android:layout_toRightOf="@id/ivConversationAvtar"
+            android:layout_below="@id/tvConversationAddress"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:singleLine="true"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

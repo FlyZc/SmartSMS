@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/layout_title_bar"/>
+    <ListView
+        android:id="@+id/lvConversationDetails"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        ></ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#292c29"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <EditText
+            android:id="@+id/etConversationDetails"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_btn_normal"
+            android:minHeight="32dp"
+            android:maxLines="3"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:text="22222222222222222222222222222222222222222222222222222222222222222222222222"/>
+        <Button
+            android:id="@+id/btnConversationDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发送"
+            android:minHeight="32dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/selector_btn_bg"/>
+    </LinearLayout>
+
+</LinearLayout>
