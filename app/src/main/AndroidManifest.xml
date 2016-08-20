@@ -26,6 +26,11 @@
                 <action android:name="com.example.zhouchi.sms"/>
             </intent-filter>
         </receiver>
+        <activity android:name=".ui.activity.NewMsgActivity"/>
+        <provider
+            android:exported="true"
+            android:authorities="com.zhouchi.smartsms"
+            android:name=".provider.GroupProvider"/>
     </application>
 
 </manifest>
