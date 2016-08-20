@@ -23,6 +23,7 @@ import com.example.zhouchi.smartsms.dialog.ConfirmDialog;
 import com.example.zhouchi.smartsms.dialog.DeleteDialog;
 import com.example.zhouchi.smartsms.global.Constant;
 import com.example.zhouchi.smartsms.ui.activity.ConversationDetailsActivity;
+import com.example.zhouchi.smartsms.ui.activity.NewMsgActivity;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import java.util.List;
@@ -151,6 +152,11 @@ public class ConversationFragment extends BaseFragment {
                     showDeleteDialog();
                 }
                 break;
+            case R.id.btnNew:
+                Intent intent = new Intent(getActivity(), NewMsgActivity.class);
+                startActivity(intent);
+                break;
+
         }
 
     }
