@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -14,6 +15,7 @@ import com.example.zhouchi.smartsms.adapter.ConversationDetailAdapter;
 import com.example.zhouchi.smartsms.base.BaseActivity;
 import com.example.zhouchi.smartsms.dao.ContactDao;
 import com.example.zhouchi.smartsms.dao.SimpleQueryHandler;
+import com.example.zhouchi.smartsms.dao.SmsDao;
 import com.example.zhouchi.smartsms.global.Constant;
 
 /**
@@ -35,11 +37,12 @@ public class ConversationDetailsActivity extends BaseActivity{
         lvConversationDetails = (ListView)findViewById(R.id.lvConversationDetails);
         etConversationDetails = (EditText)findViewById(R.id.etConversationDetails);
         btnConversationDetails = (Button)findViewById(R.id.btnConversationDetails);
+        lvConversationDetails.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
     }
 
     @Override
     public void initListener() {
-
+        btnConversationDetails.setOnClickListener(this);
     }
 
     @Override
@@ -63,9 +66,6 @@ public class ConversationDetailsActivity extends BaseActivity{
         String selection = "thread_id = " + thread_id;
         queryHandler = new SimpleQueryHandler(getContentResolver());
         queryHandler.startQuery(0, conversationDetailAdapter, Constant.URI.URI_SMS, projection, selection, null, "date");
-
-        Cursor cursor = getContentResolver().query(Constant.URI.URI_SMS, projection, selection, null, null);
-
     }
 
     @Override
@@ -74,6 +74,14 @@ public class ConversationDetailsActivity extends BaseActivity{
             case R.id.ivTitleBarBackBtn:
                 finish();
                 break;
+            case R.id.btnConversationDetails:
+                String body = etConversationDetails.getText().toString();
+                if (!TextUtils.isEmpty(body)) {
+                    SmsDao.sendSms(this, address, body);
+                    etConversationDetails.setText("");
+                }
+                break;
+
         }
 
     }
