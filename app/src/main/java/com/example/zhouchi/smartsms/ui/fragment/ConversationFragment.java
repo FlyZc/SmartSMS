@@ -1,5 +1,6 @@
 package com.example.zhouchi.smartsms.ui.fragment;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,12 +19,17 @@ import com.example.zhouchi.smartsms.R;
 import com.example.zhouchi.smartsms.adapter.ConversationAdapter;
 import com.example.zhouchi.smartsms.base.BaseFragment;
 import com.example.zhouchi.smartsms.bean.Conversation;
+import com.example.zhouchi.smartsms.bean.Group;
+import com.example.zhouchi.smartsms.dao.GroupDao;
 import com.example.zhouchi.smartsms.dao.SimpleQueryHandler;
+import com.example.zhouchi.smartsms.dao.ThreadGroupDao;
 import com.example.zhouchi.smartsms.dialog.ConfirmDialog;
 import com.example.zhouchi.smartsms.dialog.DeleteDialog;
+import com.example.zhouchi.smartsms.dialog.ListDialog;
 import com.example.zhouchi.smartsms.global.Constant;
 import com.example.zhouchi.smartsms.ui.activity.ConversationDetailsActivity;
 import com.example.zhouchi.smartsms.ui.activity.NewMsgActivity;
+import com.example.zhouchi.smartsms.utils.ToastUtils;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import java.util.List;
@@ -105,6 +111,23 @@ public class ConversationFragment extends BaseFragment {
                 }
             }
         });
+        lvConversation.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Cursor cursor = (Cursor)conversationAdapter.getItem(i);
+                Conversation conversation = Conversation.createFromCursor(cursor);
+                if (ThreadGroupDao.hasGroup(getActivity().getContentResolver(), conversation.getThread_id())) {
+                    //该会话已经添加群组，弹出确定取消对话框
+                    showExitDialog(conversation.getThread_id());
+                }
+                else {
+                    //该会话没没有被添加
+                    showSelectGroupDialog(conversation.getThread_id());
+
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -122,8 +145,6 @@ public class ConversationFragment extends BaseFragment {
         };
         queryHandler.startQuery(0, conversationAdapter, Constant.URI.URI_SMS_CONVERSATION, projetion, null, null, "date desc");
 
-
-        //Cursor cursor = getActivity().getContentResolver().query(Constant.URI.URI_SMS_CONVERSATION, null, null, null, null);
     }
 
     @Override
@@ -227,4 +248,49 @@ public class ConversationFragment extends BaseFragment {
             }
         });
     }
+    public void showExitDialog(final int thread_id) {
+        final int group_id = ThreadGroupDao.getGroupIdByThreadId(getActivity().getContentResolver(), thread_id);
+        //获取群组名字
+        String name = GroupDao.getGroupNameByGroupId(getActivity().getContentResolver(), group_id);
+        String message = "该会话已经被添加到(" + name + ")群组,是否退出该群组?";
+        ConfirmDialog.showDialog(getActivity(), "提示", message, new ConfirmDialog.ConfirmListener() {
+            @Override
+            public void onCancle() {
+
+            }
+
+            @Override
+            public void onConfirm() {
+                boolean isSuccess = ThreadGroupDao.deleteThreadGroupByThreadId(getActivity().getContentResolver(), thread_id, group_id);
+                ToastUtils.showToastShort(getActivity(), isSuccess ? "退出成功" : "退出失败");
+
+            }
+        });
+    }
+    public void showSelectGroupDialog(final int thread_id) {
+
+        final Cursor cursor = getActivity().getContentResolver().query(Constant.URI.URI_GROUP_QUERY, null, null, null, null);
+        if (cursor.getCount() == 0) {
+            ToastUtils.showToastShort(getActivity(), "当前没有分组, 请先创建分组");
+            return;
+        }
+        String[] items = new String[cursor.getCount()];
+        while (cursor.moveToNext()) {
+            Group group = Group.createFromCursor(cursor);
+            items[cursor.getPosition()] = group.getName();
+
+        }
+
+        ListDialog.showDialog(getActivity(), "选择群组", items, new ListDialog.OnListDialogItemListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                cursor.moveToPosition(i);
+                Group group = Group.createFromCursor(cursor);
+                boolean isSuccess = ThreadGroupDao.insertThreadGroup(getActivity().getContentResolver(), thread_id, group.get_id());
+                ToastUtils.showToastShort(getActivity(), isSuccess ? "插入成功" : "插入失败");
+
+            }
+        });
+    }
+
 }

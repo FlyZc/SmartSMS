@@ -1,5 +1,6 @@
 package com.example.zhouchi.smartsms;
 
+import android.content.Context;
 import android.content.Intent;
 import android.provider.Telephony;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.view.View;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.zhouchi.smartsms.adapter.ViewPagerAdapter;
@@ -65,6 +67,8 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
             }
         });

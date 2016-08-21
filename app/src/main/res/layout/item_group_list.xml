@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/selector_item_group_list_bg"
+    >
+    <TextView
+        android:id="@+id/tvGroupListName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="群组名字"
+        android:drawableLeft="@drawable/select_contact_bg"
+        android:gravity="center_vertical"
+        android:drawablePadding="5dp"
+        android:textSize="16sp"
+        />
+    <TextView
+        android:id="@+id/tvGroupListDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:78pm"
+        android:textSize="15sp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+
+
+</RelativeLayout>

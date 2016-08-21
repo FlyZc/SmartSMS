@@ -27,6 +27,7 @@
             </intent-filter>
         </receiver>
         <activity android:name=".ui.activity.NewMsgActivity"/>
+        <activity android:name=".ui.activity.GroupDetailsActivity"/>
         <provider
             android:exported="true"
             android:authorities="com.zhouchi.smartsms"

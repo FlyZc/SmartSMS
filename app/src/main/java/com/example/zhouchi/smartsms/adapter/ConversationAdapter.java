@@ -1,7 +1,6 @@
 package com.example.zhouchi.smartsms.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,13 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.zhouchi.smartsms.R;
 import com.example.zhouchi.smartsms.bean.Conversation;
 import com.example.zhouchi.smartsms.dao.ContactDao;
-
 import java.util.ArrayList;
 import java.util.List;
 

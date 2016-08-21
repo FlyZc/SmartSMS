@@ -42,6 +42,7 @@ public class ConversationDetailAdapter extends CursorAdapter {
         //判断这条短信的时间是否与上一条短信相差三分钟
         if (cursor.getPosition() == 0) {
             //第一条短信不需要处理，直接显示就好
+            viewHolder.tvConversationDetailsTime.setVisibility(View.VISIBLE);
             showDate(context);
         }
         else {
